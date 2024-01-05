@@ -1,0 +1,252 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EDFilms</title>
+
+    <link rel="icon" href="/api/static/img/Icona_Scheda.png" sizes="32x32">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/api/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg" style="background-color: #33006E;">
+
+        <div class="container-fluid" style="background-color: #33006E;">
+            <a class="navbar-brand" href="#"><img src="/api/static/img/Logo.png" alt="Bootstrap" width="120" height="90"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="Home.html" style="color: white;"><h5>Home</h5></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="nuovo.html" style="color: white;"><h5>Film</h5></a>
+                    </li>
+                </ul>
+
+                <form class="d-flex" role="search" onsubmit="event.preventDefault(); SEARCH()" method="POST">
+                  <input class="form-control me-2" type="search" placeholder="Cerca..." aria-label="Search" name="search_query" id="nome">
+                  <button class="btn btn-outline-success" type="submit" style="color:#FFFFFF">Ricerca</button>
+              </form>
+
+            </div>
+        </div>
+    </nav><div class="modal-overlay">
+  <div class="modal-content">
+    <div id="innerDiv"> <!-- Verifica che questo elemento contenga il contenuto che desideri modificare -->
+      <!-- Contenuto che verrà modificato -->
+    </div>
+  </div>
+</div>
+<div align="center" class="cont">
+  <div class="container">
+    <div class="animatedDiv blue"><img src="/api{{url_for('static', filename='uploads/'+film.NOME_FILM+'.jpg')}}" alt="Blue Image" style="width: 100%; height: 70%;" /><h1>{{film.NOME_FILM}}</h1><ul class="a">
+  <li align="center">{{film.NOME_FILM}}</li>
+  <li>{{film.DESCRIZIONE}}</li>
+  <li>{{film.ANNO}}</li>
+</ul></div>
+<script>
+    // Funzione per spostare i div al centro della pagina con animazione
+function animateDivsToCenter() {
+  var container = document.querySelector('.container');
+  var divs = document.querySelectorAll('.animatedDiv');
+
+  var containerWidth = container.offsetWidth;
+  var totalWidth = 0;
+  var currentLineHeight = 45;
+  var currentLineWidth = 0;
+  var lineHeight = 0;
+  var marginLeft = 10; // Spazio tra i div
+
+  divs.forEach(function(div) {
+    var divWidth = div.offsetWidth;
+    var divHeight = div.offsetHeight;
+
+    // Se il div supera la larghezza del container, passa alla riga successiva
+    if (currentLineWidth + divWidth > containerWidth) {
+      currentLineHeight += lineHeight + marginLeft;
+      currentLineWidth = 0;
+      lineHeight = 0;
+    }
+
+    div.style.top = currentLineHeight + 'px';
+    div.style.left = currentLineWidth + 'px';
+
+    currentLineWidth += divWidth + marginLeft;
+    totalWidth = Math.max(totalWidth, currentLineWidth);
+    lineHeight = Math.max(lineHeight, divHeight);
+  });
+
+  container.style.width = totalWidth + 'px';
+}
+
+// Esegui l'animazione quando la pagina è caricata
+window.onload = function() {
+  setTimeout(function() {
+    animateDivsToCenter(); // Sposta i div al centro con animazione
+  }, 100);
+};
+document.addEventListener("DOMContentLoaded", function() {
+  const modalOverlay = document.querySelector('.modal-overlay');
+  const innerDiv = document.getElementById('innerDiv');
+  let insideInnerDiv = false;
+  let videoElement = null; // Inizializzazione di videoElement
+
+  innerDiv.addEventListener('mouseover', () => {
+    insideInnerDiv = true;
+  });
+
+  innerDiv.addEventListener('mouseleave', () => {
+    insideInnerDiv = false;
+    modalOverlay.style.display = 'none';
+    if (videoElement) {
+      videoElement.pause();
+      videoElement.currentTime = 0;
+    }
+  });
+
+  const divs = document.querySelectorAll('.animatedDiv');
+
+  divs.forEach((div) => {
+    let timeout;
+
+    div.addEventListener('click', () => {
+      const imgSrc = div.querySelector('img').getAttribute('src');
+      const videoSrc = imgSrc.replace(/\.(jpg|jpeg)$/i, '.mp4');
+
+      const imgElement = div.querySelector('img');
+      const h1Element = div.querySelector('h1');
+      const h1Text = h1Element.textContent;
+      const ulElement = div.querySelector('ul');
+      const liElements = ulElement.querySelectorAll('li');
+	  
+      videoElement = document.createElement('video');
+      videoElement.setAttribute('width', '700');
+      videoElement.setAttribute('height', '400');
+      videoElement.setAttribute('controls', 'true');
+
+      const sourceElement = document.createElement('source');
+      sourceElement.setAttribute('src', videoSrc);
+      sourceElement.setAttribute('type', 'video/mp4');
+
+      videoElement.appendChild(sourceElement);
+
+      const textContainer = document.createElement('div');
+      const h1TextElement = document.createElement('h1');
+      const ulTextElement = document.createElement('ul');
+	  
+      h1TextElement.textContent = h1Text;
+      liElements.forEach(li => {
+        const liText = document.createElement('li');
+        liText.textContent = li.textContent;
+        ulTextElement.appendChild(liText);
+      });
+
+      textContainer.appendChild(h1TextElement);
+      textContainer.appendChild(ulTextElement);
+	  
+      innerDiv.innerHTML = '';
+      innerDiv.appendChild(videoElement);
+      innerDiv.appendChild(textContainer);
+
+      innerDiv.style.position = 'fixed';
+      innerDiv.style.top = '50%';
+      innerDiv.style.left = '50%';
+      innerDiv.style.transform = 'translate(-50%, -50%)';
+      modalOverlay.style.display = 'flex';
+    });
+
+    div.addEventListener('mouseover', () => {
+      timeout = setTimeout(() => {
+        const imgSrc = div.querySelector('img').getAttribute('src');
+        const videoSrc = imgSrc.replace(/\.(jpg|jpeg)$/i, '.mp4');/// i è un flag e serve a dire che jpg o jpeg possono essere scritti in qualunque modo
+
+        const imgElement = div.querySelector('img');
+        const h1Element = div.querySelector('h1');
+        const h1Text = h1Element.textContent;
+        const ulElement = div.querySelector('ul');
+        const liElements = ulElement.querySelectorAll('li');
+		
+        videoElement = document.createElement('video');
+        videoElement.setAttribute('width', '700');
+        videoElement.setAttribute('height', '400');
+        videoElement.setAttribute('controls', 'true');
+
+        const sourceElement = document.createElement('source');
+        sourceElement.setAttribute('src', videoSrc);
+        sourceElement.setAttribute('type', 'video/mp4');
+
+        videoElement.appendChild(sourceElement);
+
+        const textContainer = document.createElement('div');
+        const h1TextElement = document.createElement('h1');
+        const ulTextElement = document.createElement('ul');
+		
+        h1TextElement.textContent = h1Text;
+        liElements.forEach(li => {
+          const liText = document.createElement('li');
+          liText.textContent = li.textContent;
+          ulTextElement.appendChild(liText);
+        });
+
+        textContainer.appendChild(h1TextElement);
+        textContainer.appendChild(ulTextElement);
+
+        innerDiv.innerHTML = '';
+        innerDiv.appendChild(videoElement);
+        innerDiv.appendChild(textContainer);
+
+        innerDiv.style.position = 'fixed';
+        innerDiv.style.top = '50%';
+        innerDiv.style.left = '50%';
+        innerDiv.style.transform = 'translate(-50%, -50%)';
+        modalOverlay.style.display = 'flex';
+      }, 2000); // Timeout di 2 secondo
+    });
+
+     modalOverlay.addEventListener('mouseleave', () => {
+    if (!insideInnerDiv) {
+      modalOverlay.style.display = 'none';
+      if (videoElement) {
+        videoElement.pause();
+        videoElement.currentTime = 0;
+      }
+    }
+  });
+
+	  innerDiv.addEventListener('mouseenter', () => {
+		insideInnerDiv = true;
+	  });
+
+	  innerDiv.addEventListener('mouseleave', () => {
+		insideInnerDiv = false;
+	  });
+	});
+  });
+  function SEARCH() {
+  let requestBody = {
+	nome: document.getElementById('nome').value,
+  };
+  let jsonString = JSON.stringify(requestBody);
+  fetch('http://127.0.0.1/api/search', {
+    method: 'POST',
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: jsonString
+})
+    .then(response => response.json())
+    .then(response => {
+      console.log(response);
+    });
+}
+  </script>
+</body>
+</html>

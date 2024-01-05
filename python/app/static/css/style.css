@@ -1,0 +1,161 @@
+.btn-outline-success,
+.btn-outline-success:hover,
+.btn-outline-success:active,
+.btn-outline-success:focus {
+  background-color: #900FB1;
+  color: #FFFFFF;
+  border-color: #900FB1;
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:active,
+.btn-outline-success:focus {
+  background-color: #FF00AD;
+  color: #FFC1EB;
+}
+
+.custom-form {
+  background-color: #33006E;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.custom-form label {
+  color: white;
+}
+
+.custom-form input {
+  color: #33006E;
+  background-color: white;
+}
+
+.custom-form button[type="submit"]:hover,
+.custom-form button[type="submit"]:active,
+.custom-form button[type="submit"]:focus {
+    background-color: #FF00AD;
+    color: #FFC1EB;
+}
+
+.navbar-nav {
+  padding-left: 1.5%; /* Puoi regolare il valore di padding-left a tuo piacimento per spostare tutte le scritte a destra */
+}
+
+.navbar-nav > li {
+  margin-right: 10%; /* Puoi regolare il valore di margin-right a tuo piacimento per impostare la distanza desiderata */
+}
+
+.navbar-nav-scroll .nav-link:hover {
+  color: #FF00AD !important; /* Sostituisci con il colore desiderato */
+}
+
+/* Aggiungi questo blocco di stile al tuo file CSS */
+
+/* Aggiorna il blocco di stile CSS nel tuo file style.css */
+
+.dropdown-menu {
+  background-color: #900FB1; /* Sfondo rosso per l'intero menu a discesa */
+}
+
+.dropdown-menu .dropdown-item {
+  color: #FFFFFF; /* Colore del testo bianco */
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #FF00AD; /* Cambia lo sfondo in giallo quando passi sopra con il mouse */
+  color: #FFC1EB; /* Cambia il colore del testo quando passi sopra con il mouse */
+}
+.cont{
+    width: 70%;
+    background-color: black;
+    position: absolute;
+    left: 59%;
+	top: 35%;
+    transform: translate(-50%, -50%);
+  }
+	
+    .container {
+      position: relative;
+      width: 100%; /* Larghezza del container per contenere i div */
+      margin: 0 auto; /* Centra il container nella pagina */
+    }
+
+    .animatedDiv {
+	  width: 250px;
+	  height: 200px;
+	  position: absolute;
+	  top: 50%;
+	  transform: translate(-50%, -50%);
+	  transition: all 1s ease; /* Transizione per l'animazione */
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  white-space: nowrap;
+	  z-index: 0; /* Valore predefinito per l'ordinamento degli elementi */
+	  border: 2px solid #000;
+	  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+	}
+	
+	.animatedDiv ul.a li {
+	  word-wrap: break-word; /* Forza il testo a andare a capo */
+	  white-space: normal; /* Permette al testo di andare a capo */
+}
+	
+	.animatedDiv img {
+	  width: 400px; /* Imposta la larghezza dell'immagine al 100% del contenitore */
+	  height:400px;
+	  display: block; /* Assicura che l'immagine non abbia spazi vuoti sotto di essa */
+}
+	
+	.animatedDiv ul {
+	  /* Rimuove lo stile a pallini dalla lista */
+	  list-style-type: none;
+	  /* Imposta il padding per evitare che il testo tocchi i bordi */
+	  padding: 10px;
+	  /* Specifica altezza massima e overflow per gestire il testo troppo lungo */
+	  max-height: 100%; /* Usa percentuali o un valore specifico per evitare che il testo esca */
+	  overflow-y: auto; /* Abilita lo scrolling verticale se necessario */
+	}
+
+	.blue { background-color: blue; }
+	.red { background-color: red; }
+	.green { background-color: green; }
+	.yellow { background-color: yellow; }
+	
+	/* Stili per la schermata sovrapposta */
+	.modal-overlay {
+	  display: none;
+	  position: fixed;
+	  top: 40%;
+	  left: 0%;
+	  width: 60%;
+	  height: 60%;
+	  justify-content: center;
+	  align-items: center;
+	  z-index: 2; /* Z-index maggiore per essere sopra gli altri elementi */
+	}
+
+	.modal-content {
+	  top: 40%;
+	  border-radius: 8px;
+	  /* Aggiungi altri stili per personalizzare l'aspetto della schermata */
+	  z-index: 3; /* Z-index ancora maggiore per essere sopra modal-overlay */
+	}
+	
+	/* Stili per il div all'interno della schermata */
+	#innerDiv {
+	  width: 700px; /* Imposta la larghezza dell'immagine */
+	  height:550px;/*ne imposta l'altezza*/
+	  display: block; /* Assicura che l'immagine non abbia spazi vuoti sotto di essa */
+	  z-index: 4;
+	  word-wrap: break-word; /* o overflow-wrap: break-word; */
+	  overflow-y: auto; /* Abilita lo scorrimento verticale quando il contenuto supera l'altezza massima */
+	  background: lightblue;
+	  top: 50%;
+	  border-radius: 8px;
+	  position: fixed;
+      left: 50%;
+	  transform: translate(-50%, -50%);
+	  overflow-x: hidden;
+	}
